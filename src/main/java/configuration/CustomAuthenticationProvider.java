@@ -1,11 +1,8 @@
-package configuration;
-
-/**
- * Created by steven on 31/08/16.
+package configuration; /**
+ * Created by steven on 31/08/16. Validates a JWT token
  */
 
 import dto.UserDTO;
-import entities.UsersEntity;
 import mappers.JwtClaimsMapper;
 import org.jose4j.jwa.AlgorithmConstraints;
 import org.jose4j.jws.AlgorithmIdentifiers;
@@ -16,7 +13,6 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +29,7 @@ import java.util.List;
 
 @Component
 @EnableAuthorizationServer
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Inject
     JwtClaimsMapper jwtClaimsMapper;
@@ -89,12 +85,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> grantedAuthentications = new ArrayList<>();
         grantedAuthentications.add(new SimpleGrantedAuthority("ROLE_USER"));
         grantedAuthentications.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuthentications);
+        return new UserObjectAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuthentications, user);
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+        return authentication.equals(UserObjectAuthenticationToken.class);
     }
 
 }
