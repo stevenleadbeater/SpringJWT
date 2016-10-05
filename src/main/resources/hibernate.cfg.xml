@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/gis</property>
+    <property name="connection.username">application_admin</property>
+    <property name="connection.password">test123!#9845</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="connection_pool_size">1</property>
+    <property name="hbm2ddl.auto">validate</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.dialect">org.hibernate.spatial.dialect.postgis.PostgisDialect</property>
+    <mapping class="entities.MapEntity"/>
+    <mapping class="entities.SpeedConversionsEntity"/>
+    <mapping class="entities.UsersEntity"/>
+    <mapping class="entities.UserSettingsEntity"/>
+      <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
